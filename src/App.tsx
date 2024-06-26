@@ -2,13 +2,12 @@ import React, { useState, useMemo } from 'react';
 import { createRoot } from 'react-dom/client';
 import Map, { AttributionControl } from 'react-map-gl/maplibre';
 import DeckGL from '@deck.gl/react/typed';
-import { GeoJsonLayer } from '@deck.gl/layers/typed';
 import { _GeoJSONLoader as GeoJSONLoader } from '@loaders.gl/json';
 import { load } from '@loaders.gl/core';
-import type { Feature, Geometry, GeoJsonProperties } from 'geojson';
+import type { Geometry, GeoJsonProperties } from 'geojson';
 import {
 	formatLabel,
-	generateFillColor,
+	generateGeojsonLayer,
 	getCursor,
 	getTimeRange,
 	getTooltip,
@@ -25,19 +24,6 @@ import './styles/index.css';
 import './styles/maplibregl.css';
 import styles from './App.module.scss';
 
-type PropertiesType = {
-	ID: number;
-	Country: string;
-	Area: number;
-	Began: string;
-	Ended: string;
-	Date: number;
-	Dead: number;
-	Displaced: number;
-	MainCause: string;
-	timestamp: number;
-};
-
 export default function App({
 	data,
 }: {
@@ -47,30 +33,8 @@ export default function App({
 	const [filter, setFilter] = useState<[start: number, end: number]>();
 	const timeRange = useMemo(() => getTimeRange(data?.features), [data]);
 	const filterValue = filter || timeRange;
-
 	const layers = useMemo(
-		() => [
-			data &&
-				new GeoJsonLayer<PropertiesType>({
-					id: 'floods',
-					data: data,
-					filled: true,
-					pickable: true,
-					getFillColor: (f: Feature<Geometry, GeoJsonProperties>) =>
-						generateFillColor(f),
-					getPointRadius: (f: Feature<Geometry, GeoJsonProperties>) =>
-						Math.sqrt(f.properties?.Area) * 100,
-					// @ts-expect-error: Deck.gl is missing a type for GeoJsonLayer's getFilterValue
-					getFilterValue: (f: Feature<Geometry, GeoJsonProperties>) =>
-						f.properties?.timestamp,
-					filterRange: [filterValue[0], filterValue[1]],
-					filterSoftRange: [
-						filterValue[0] * 0.9 + filterValue[1] * 0.1,
-						filterValue[0] * 0.1 + filterValue[1] * 0.9,
-					],
-					extensions: [DATA_FILTER],
-				}),
-		],
+		() => [data && generateGeojsonLayer({ data, filterValue })],
 		[data, filterValue],
 	);
 
@@ -94,9 +58,7 @@ export default function App({
 					<AttributionControl customAttribution="G.R. Brakenridge. Global Active Archive of Large Flood Events. Dartmouth Flood Observatory, University of Colorado, USA." />
 				</Map>
 			</DeckGL>
-
 			<Legend />
-
 			{timeRange && (
 				<div className={styles.slider}>
 					<RangeSlider
