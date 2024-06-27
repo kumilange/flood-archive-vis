@@ -1,9 +1,9 @@
 import { Color, PickingInfo } from '@deck.gl/core/typed';
-import type { Feature, Geometry, GeoJsonProperties } from 'geojson';
-import { DATA_FILTER } from './constants';
 import { GeoJsonLayer } from '@deck.gl/layers/typed';
+import type { Feature, Geometry, GeoJsonProperties } from 'geojson';
+import { COLOR, DATA_FILTER } from './constants';
 
-const COLOR_RANGE = [
+export const COLOR_RANGE = [
 	[239, 243, 255],
 	[198, 219, 239],
 	[158, 202, 225],
@@ -45,8 +45,8 @@ export function getTooltip({ object }: PickingInfo) {
 		style: {
 			zIndex: '2',
 			backgroundColor: 'white',
-			color: '#08519c',
-			border: '2px solid #08519c',
+			color: `#${COLOR.primary}`,
+			border: `2px solid #${COLOR.primary}`,
 			borderRadius: '4px',
 		},
 	};

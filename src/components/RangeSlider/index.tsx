@@ -8,13 +8,14 @@ import React, {
 import { Slider, Button } from 'antd';
 import CaretRightOutlined from '@ant-design/icons/CaretRightOutlined';
 import PauseOutlined from '@ant-design/icons/PauseOutlined';
+import { COLOR } from '../../constants';
 import './ant-slider.scss';
 import styles from './RangeSlider.module.scss';
 
 const MS_PER_DAY = 8.64e7;
 const ANIMATION_SPEED = MS_PER_DAY * 10;
 const getIconColor = (isEnabled: boolean) =>
-	isEnabled ? '#08519c' : 'rgba(0, 0, 0, 0.26)';
+	isEnabled ? `#${COLOR.primary}` : COLOR.disabled;
 
 export default function RangeSlider({
 	min,

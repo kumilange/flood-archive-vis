@@ -4,8 +4,8 @@ import { FlyToInterpolator } from '@deck.gl/core/typed';
 import { WebMercatorViewport } from 'viewport-mercator-project';
 import { useAtom, useSetAtom } from 'jotai';
 import { initialBoundsAtom, initialViewAtom } from '../../atoms';
-import { AREAS } from '../../constants';
 import { AREA_SELECT_OPTIONS } from './constants';
+import { AREAS } from '../../constants';
 import './ant-select.css';
 
 export default function AreaSelect() {

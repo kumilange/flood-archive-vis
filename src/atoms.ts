@@ -1,5 +1,11 @@
 import { atom } from 'jotai';
-import { AREAS, INITIAL_VIEW_STATE } from './constants';
+import { AREAS } from './constants';
+
+const INITIAL_VIEW_STATE = {
+	longitude: 0.0098,
+	latitude: 20.4934,
+	zoom: 2,
+};
 
 type ViewStateType = {
 	longitude: number;

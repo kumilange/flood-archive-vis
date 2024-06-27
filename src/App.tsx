@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { createRoot } from 'react-dom/client';
 import Map, { AttributionControl } from 'react-map-gl/maplibre';
+import { MapView } from '@deck.gl/core/typed';
 import DeckGL from '@deck.gl/react/typed';
 import { _GeoJSONLoader as GeoJSONLoader } from '@loaders.gl/json';
 import { load } from '@loaders.gl/core';
@@ -12,7 +13,6 @@ import {
 	getTimeRange,
 	getTooltip,
 } from './utils';
-import { DATA_URL, MAP_STYLE, MAP_VIEW, DATA_FILTER } from './constants';
 import RangeSlider from './components/RangeSlider';
 import Legend from './components/Legend';
 import AreaDropDown from './components/AreaSelect';
@@ -23,6 +23,15 @@ import './styles/reset.css';
 import './styles/index.css';
 import './styles/maplibregl.css';
 import styles from './App.module.scss';
+
+const MAP_STYLE =
+	'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
+const MAP_VIEW = new MapView({
+	repeat: true,
+	farZMultiplier: 100,
+});
+const DATA_URL =
+	'https://kumilange.github.io/data-store/flood/floodArchive.geojson';
 
 export default function App({
 	data,

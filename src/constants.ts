@@ -1,30 +1,15 @@
 import { DataFilterExtension } from '@deck.gl/extensions/typed';
-import { MapView } from '@deck.gl/core/typed';
 
-// App component
-export const MAP_STYLE =
-	'https://basemaps.cartocdn.com/gl/positron-gl-style/style.json';
-
-export const MAP_VIEW = new MapView({
-	repeat: true,
-	farZMultiplier: 100,
-});
-
-export const INITIAL_VIEW_STATE = {
-	longitude: 0.0098,
-	latitude: 20.4934,
-	zoom: 2,
+export const COLOR = {
+	primary: '#08519c',
+	disabled: 'rgba(0, 0, 0, 0.26)',
 };
-
-export const DATA_URL =
-	'https://kumilange.github.io/data-store/flood/floodArchive.geojson';
 
 export const DATA_FILTER = new DataFilterExtension({
 	filterSize: 1,
 	fp64: false,
 });
 
-// AreaSelect
 type Area = {
 	[key: string]: {
 		label: string;
